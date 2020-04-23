@@ -1,0 +1,63 @@
+简单版杨氏矩阵
+有一个二维数组.
+数组的每行从左到右是递增的，每列从上到下是递增的.
+在这样的数组中查找一个数字是否存在。
+时间复杂度小于O(N);
+示例数组：
+1 2 3
+2 3 4
+3 4 5
+
+思路
+创建 3*3为例 只能从右上方 或者左下方进行查找 即 0 2或者2 0
+目的 每次查找时方向为一
+方法 0 2 为例 行++或者列-- 直到查找结束 找到返回一个数没找到返回一个数
+使用这种方法进行查找显而易见我们不用遍历完整个数组，当然时间复杂度也是小于O(N);
+
+class Solution {
+
+public:
+
+    bool Find(vector<vector<int> > array,int target) {
+
+        int rowCount = array.size();
+
+        int colCount = array[0].size();
+
+        int i,j;
+
+        for(i=rowCount-1,j=0;i>=0&&j<colCount;)
+
+        {
+
+            if(target == array[i][j])
+
+                return true;
+
+            if(target < array[i][j])
+
+            {
+
+                i--;
+
+                continue;
+
+            }
+
+            if(target > array[i][j])
+
+            {
+
+                j++;
+
+                continue;
+
+            }
+
+        }
+
+        return false;
+
+    }
+
+};
