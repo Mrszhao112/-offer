@@ -1,0 +1,175 @@
+//用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。
+//这道题最主要是要明白栈的性质和队列的性质
+
+//这道题我用C语言偏向底层一点实现的
+
+typedef int STDataType;
+typedef struct Stack
+{
+	STDataType* _a;
+	int _top;		// 栈顶
+	int _capacity;  // 容量 
+}Stack;
+
+// 初始化栈 
+void StackInit(Stack* ps)
+{
+	ps->_a = NULL;
+	ps->_top = 0;
+	ps->_capacity = 0;
+}
+
+// 入栈 
+void StackPush(Stack* ps, STDataType data)
+{
+	assert(ps);
+
+	if (ps->_top == ps->_capacity)
+	{
+		size_t newcapacity = ps->_capacity == 0 ? 4 : ps->_capacity * 2;
+		ps->_a = (STDataType*)realloc(ps->_a, newcapacity*sizeof(STDataType));
+		ps->_capacity = newcapacity;
+	}
+
+	ps->_a[ps->_top] = data;
+	ps->_top++;
+}
+
+// 出栈 
+void StackPop(Stack* ps)
+{
+	assert(ps && ps->_top > 0);
+	--ps->_top;
+}
+
+// 获取栈顶元素 
+STDataType StackTop(Stack* ps)
+{
+	assert(ps);
+	return ps->_a[ps->_top - 1];
+}
+
+// 获取栈中有效元素个数 
+int StackSize(Stack* ps)
+{
+	assert(ps);
+
+	return ps->_top;
+}
+
+// 检测栈是否为空，如果为空返回非零(1)，如果不为空返回0 
+bool StackEmpty(Stack* ps)
+{
+	assert(ps);
+
+	return ps->_top == 0 ? 1 : 0;
+}
+
+// 销毁栈 
+void StackDestroy(Stack* ps)
+{
+	assert(ps);
+
+	free(ps->_a);
+	ps->_a = NULL;
+	ps->_top = ps->_capacity = 0;
+}
+
+typedef struct {
+    Stack st1;
+    Stack st2;    
+} MyQueue;
+
+/** Initialize your data structure here. */
+
+MyQueue* myQueueCreate() {
+    
+    MyQueue* myQ=(MyQueue*)malloc(sizeof(MyQueue));
+    StackInit(&myQ->st1);
+    StackInit(&myQ->st2);
+    return myQ;
+}
+
+/** Push element x to the back of queue. */
+void myQueuePush(MyQueue* obj, int x) {//push数据进入队列 利用栈
+  if(!StackEmpty(&obj->st1))
+  {
+      StackPush(&obj->st1,x);
+  }
+  else
+  {
+      StackPush(&obj->st2,x);
+  }
+}
+
+/** Removes the element from in front of queue and returns that element. */
+int myQueuePop(MyQueue* obj) {//删除并且出栈 并且得到它
+    Stack* emptySt=&obj->st1;
+    Stack* noemptySt=&obj->st2;
+    if(!StackEmpty(&obj->st1))
+    {
+        noemptySt=&obj->st1;
+        emptySt=&obj->st2;
+    }
+
+    while(!StackEmpty(noemptySt))
+    {
+        int tmp;
+        tmp=StackTop(noemptySt);
+        StackPop(noemptySt);
+        StackPush(emptySt,tmp);
+    }
+    int ret=StackTop(emptySt);
+    StackPop(emptySt);
+    while(!StackEmpty(emptySt))
+    {
+        int tmp;
+        tmp=StackTop(emptySt);
+        StackPop(emptySt);
+        StackPush(noemptySt,tmp);
+    }
+    return ret;
+  
+}
+
+/** Get the front element. */
+int myQueuePeek(MyQueue* obj) {//得到队列的头元素
+      Stack* emptySt=&obj->st1;
+    Stack* noemptySt=&obj->st2;
+    if(!StackEmpty(&obj->st1))
+    {
+        noemptySt=&obj->st1;
+        emptySt=&obj->st2;
+    }
+
+    while(!StackEmpty(noemptySt))
+    {
+        int tmp;
+        tmp=StackTop(noemptySt);
+        StackPop(noemptySt);
+        StackPush(emptySt,tmp);
+    }
+    int ret=StackTop(emptySt);
+        while(!StackEmpty(emptySt))
+    {
+        int tmp;
+        tmp=StackTop(emptySt);
+        StackPop(emptySt);
+        StackPush(noemptySt,tmp);
+    }
+    return ret;
+  
+}
+
+/** Returns whether the queue is empty. */
+bool myQueueEmpty(MyQueue* obj) {//判断是否为空
+  return StackEmpty(&obj->st1)&&StackEmpty(&obj->st2);
+}
+
+void myQueueFree(MyQueue* obj) {
+    StackDestroy(&obj->st1);
+    StackDestroy(&obj->st1);
+
+    free(obj);
+}
+
