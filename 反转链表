@@ -1,0 +1,42 @@
+//输入一个链表，按链表从尾到头的顺序返回一个ArrayList。
+
+思路如下
+1.栈的先入后出
+class Solution {
+public: 
+     vector<int> 
+printListFromTailToHead(ListNode* head) { 
+    vector<int> value;   
+    ListNode *p=NULL;  
+    p=head;  
+    stack<int> stk;   
+    while(p!=NULL){       
+    stk.push(p->val);   
+    p=p->next;      
+}      
+    while(!stk.empty()){  
+            value.push_back(stk.top());   
+            stk.pop();   
+}       
+   return value;  
+}
+};
+
+
+
+
+
+
+2.数组翻转
+
+
+cpp有库函数可以进行反转 这里不加多说 
+建立数组保存顺序遍历结果 注意边界条件 遍历完成 对数组进行反转
+
+
+
+3.递归
+递归思路本质上还是借鉴了堆栈的性质 不加多说 类比代码一
+
+
+
