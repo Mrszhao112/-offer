@@ -1,0 +1,29 @@
+//题目求第n项的斐波那契数是多少 自己想出来了两种 牛客上面发现还有矩阵方法以及幂级数方法提高效率
+
+//常规方法
+
+public class Solution {
+    public int Fibonacci(int n) {
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        return Fibonacci(n - 1) + Fibonacci(n - 2);
+    }
+}
+
+//循环方法
+
+public class Solution {
+    public int Fibonacci(int n) {
+    
+        if(n==0)
+          return 0;
+        if(n<3)
+          return 1;
+        int a = 2, b = 1;
+        for (int i = 3; i <n; i++) {
+            a = a + b;
+            b = a - b;
+        }
+        return a;
+    }
+}
