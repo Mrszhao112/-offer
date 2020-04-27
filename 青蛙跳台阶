@@ -1,0 +1,32 @@
+//首先是正常情况 即青蛙一次跳一个或者两个台阶 
+//那么分解子问题
+//由于它可以跳1级台阶或者2级台阶，所以它上一步必定在第n-1,或者第n-2级台阶，也就是说它跳上n级台阶的跳法数是跳上n-1和跳上n-2级台阶的跳法数之和。
+//设跳上 n级台阶有  f(n)种跳法，则它跳上n-1级的台阶有f(n-1)种跳法，则它跳上n-2级的台阶有f(n-2)种跳法。
+//本质上还是一个斐波那契问题
+
+public class Solution {
+    public int Jump(int target) {
+        int a = 1;
+        int b = 1;
+        for (int i = 1; i < target; i++) {
+            a = a + b;
+            b = a - b;
+        }
+        return a;
+    }
+}
+
+//变态跳台阶
+//一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
+//简单的数学归纳法即可 归纳结果 f(n)==2*f(n-1)
+
+public class Solution {
+    public int JumpFloorII(int target) {
+        int sum = 1;
+        if(target == 0)
+            return 0;
+        for(int i = 1;i < target; i++)
+            sum = 2* sum;
+        return sum;
+    }
+}
