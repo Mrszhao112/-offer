@@ -1,0 +1,31 @@
+//给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。
+
+//保证base和exponent不同时为0
+
+//这到道题考查一点基础的数学知识 而在代码方面考察了代码的健壮性 也就是鲁棒性 
+
+//我们应尽可能考虑多种情况去解决问题
+
+
+class Solution {
+public:
+    double Power(double base, int exponent) {
+        if(exponent == 0)return 1;
+        int count = 0;
+        if(exponent < 0)
+            count = (-1)*exponent;
+        else
+            count = exponent;
+ 
+        double result = 1;
+        while(count > 0){
+            result*= base;
+            count--;
+        }
+ 
+        if(exponent > 0)
+            return result;
+        else
+            return 1/result;
+    }
+};
