@@ -1,0 +1,48 @@
+//题目描述
+//输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
+
+//思路
+        //判断b是不是a的字结构树
+        //思路 b是小于等于a的（结构上）
+        //两个步骤 一个是判断是不是当前节点的子树 一个向下继续走h
+        //当p2走完后一直匹配返回真
+        //不配则换一个节点进行比对 递归
+ 
+class Solution {
+public:
+    bool HasSubtree(TreeNode* pRoot1, TreeNode* pRoot2)
+    {
+       
+        while(pRoot1==nullptr||pRoot2==nullptr)
+        {
+            return false;
+        }
+         
+        if(help(pRoot1,pRoot2))
+        {
+            return true;
+        }
+         
+        return HasSubtree(pRoot1->left,pRoot2)||HasSubtree(pRoot1->right,pRoot2);  
+    }
+    
+    bool help(TreeNode* pRoot1, TreeNode* pRoot2)
+    {
+        if(pRoot2==nullptr)
+        {
+            return true;
+        }
+        if(pRoot1==nullptr)//需要三个if判断
+        {
+            return false;
+        } 
+        if(pRoot1->val!=pRoot2->val)
+        {
+            return false;
+        }
+        
+        return help(pRoot1->left,pRoot2->left)&&help(pRoot1->right,pRoot2->right);
+         
+    }
+     
+};
