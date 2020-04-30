@@ -1,0 +1,19 @@
+//将二叉树进行反转
+class Solution {
+public:
+    void Mirror(TreeNode *pRoot) {
+    
+    if(pRoot==NULL)
+       return ;
+       
+        Mirror(pRoot->left);
+        Mirror(pRoot->right);
+        
+        //类比树的后序遍历
+        TreeNode *temp=pRoot->left;
+        pRoot->left=pRoot->right;
+        pRoot->right=temp;
+        
+    }
+    
+};
