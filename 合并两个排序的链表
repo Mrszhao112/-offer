@@ -1,0 +1,52 @@
+//合并两个单调递增的链表并返回合并后的链表
+
+
+class Solution {
+public:
+    ListNode* Merge(ListNode* pHead1, ListNode* pHead2)
+    {
+        //合并有序链表 单调递增
+        //边界有一个为空直接返回另一个
+        //循环进行比较 将小的先放在前面
+        //有一个链表为空时候 直接链上另一个链表然后返回头节点
+        if(pHead1==nullptr&&pHead2==nullptr)//边界条件
+        {
+            return nullptr;
+        }
+        if(pHead1==nullptr)
+        {
+            return pHead2;
+        }
+        if(pHead2==nullptr)
+        {
+            return pHead1;
+        }
+        ListNode* NewNode=(ListNode*)malloc(sizeof(ListNode*));
+        NewNode->val=0;
+        ListNode* reNode=NewNode;
+        while(pHead1!=nullptr&&pHead2!=nullptr)
+        {
+            if(pHead1->val<pHead2->val)
+            {
+                NewNode->next=pHead1;
+                pHead1=pHead1->next;
+            }else
+            {
+                NewNode->next=pHead2;
+                pHead2=pHead2->next;
+            }
+             
+            NewNode=NewNode->next;
+             
+        }
+         
+        if(pHead1==nullptr)
+        {
+            NewNode->next=pHead2;
+        }else
+        {
+            NewNode->next=pHead1;
+        }
+        return reNode->next;
+    }
+};
