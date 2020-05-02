@@ -1,0 +1,52 @@
+//从上往下打印出二叉树的每个节点，同层节点从左至右打印。
+using namespace std;
+class Solution {
+public:
+    vector<int> PrintFromTopToBottom(TreeNode* root) {
+        //将更节点从上而下 同层节点从左到右
+        //两个队列 
+        //这道题踩到坑了 if else if连环用 一旦进入某个if 则会终止后面的选择分支
+        queue<TreeNode*> Q1;
+        queue<TreeNode*> Q2;
+        vector<int> tmp;
+        if(root)
+        {
+            Q1.push(root);
+        }
+        while(true)
+        {
+            if(Q1.empty()&&Q2.empty())
+                break;
+                
+            while(!Q1.empty())
+            {
+                TreeNode* help=Q1.front();
+                tmp.push_back(help->val);
+                if(help->left)
+                {
+                    Q2.push(help->left);
+                }
+                if(help->right)
+                {
+                    Q2.push(help->right);
+                }    
+                Q1.pop();
+            }
+            while(!Q2.empty())
+            {
+                TreeNode* help=Q2.front();
+                tmp.push_back(help->val);
+                if(help->left)
+                {
+                    Q1.push(help->left);
+                }
+                if(help->right)
+                {
+                    Q1.push(help->right);
+                }
+                Q2.pop();
+            }
+        }
+        return tmp;
+    }
+};
