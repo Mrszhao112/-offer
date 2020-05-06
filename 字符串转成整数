@@ -1,0 +1,51 @@
+//题目描述
+//将一个字符串转换成一个整数，要求不能使用字符串转换整数的库函数。
+//数值为0或者字符串不是一个合法的数值则返回0。
+
+//输入描述:
+//输入一个字符串,包括数字字母符号,可以为空。
+
+//输出描述:
+//如果是合法的数值表达则返回该数字，否则返回0。
+
+//*注意：越界情况需要讨论 -2147483649 否则case通过率为85.71% *
+
+//负数最小值不管是否取负号是相等的。
+
+//cout<<(-(0x7FFFFFFF + 1) == (0x7FFFFFFF + 1)) <<endl;  // 1
+//完整代码，我觉得思路很清晰。
+class Solution {
+public:
+  int StrToInt(string str) {
+      int res = 0;
+      int len = str.size();
+      int index = 0;         //str索引
+      int flag = true;       //默认为正数
+      // 处理空格
+      while(str[index] == ' ')
+          index++;
+      // 处理首位
+      if(str[index] == '+')
+          flag = true;
+      else if(str[index] == '-')
+          flag = false;
+      else if(str[index] >= '0' && str[index] <= '9')
+          res += str[index] & 0xF; // ASCII，等价于 - '0'操作
+      else
+          return 0;
+      index++;
+      // 接着处理
+      while(index < len){
+          if(!(str[index] >= '0' && str[index] <= '9'))
+              return 0;
+          char tmp = str[index] - '0';
+          if(index + 1 == len) // 边界情况！！！
+              if (res > 0 && (res * 10 + 7 == 0x7FFFFFFF))
+                  if((flag && tmp > 7) || (!flag && tmp > 8))
+                      return 0;
+          res = (res<<1) + (res<<3) + tmp; // 左移1位相当于×2
+          index++;
+      }
+      return flag? res: -res;
+  }
+};
