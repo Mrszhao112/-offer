@@ -5,7 +5,7 @@ using namespace std;
 
 void test_vector1() {
   vector<int> v1;
-  v1.push_back(1);//尾插元素
+  v1.push_back(1);
   v1.push_back(2);
   v1.push_back(3);
   v1.push_back(4);
@@ -16,13 +16,11 @@ void test_vector1() {
   cout << endl;
 
 
-  vector<int> v2(v1);//vector的拷贝构造
+  vector<int> v2(v1);  //vector的拷贝构造
   for (size_t i = 0; i < v2.size(); ++i) {
     cout << v2[i] << " ";
   }
   cout << endl;
-
-  //18329984266
 
   vector<int> v3; 
   v3.push_back(4);
