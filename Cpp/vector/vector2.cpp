@@ -112,7 +112,7 @@ public:
 			size_t newcapacity = capacity() == 0 ? 2 : capacity() * 2;
 			reverse(newcapacity);
 		}
-		_finish = x;
+		*_finish = x;
 		_finish++;
 	}
 	void pop_back() {
