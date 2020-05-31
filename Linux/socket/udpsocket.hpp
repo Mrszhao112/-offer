@@ -26,12 +26,9 @@ class UdpSocket{
       if (ret < 0) {
         perror("bind error");
         return false;
-
       }
       return true;
-
     } 
-
     bool Recv(std::string *buf,  std::string *ip=NULL,  uint16_t *port=NULL) {
       struct sockaddr_in peer_addr;
       socklen_t len = sizeof(struct sockaddr_in);
@@ -40,16 +37,13 @@ class UdpSocket{
       if (ret < 0) {
         perror("recvfrom error");
         return false;
-
       }
       buf->assign(tmp, ret); 
       if (port != NULL) {
         *port = ntohs(peer_addr.sin_port);
-
       }
       if (ip != NULL) {
         *ip = inet_ntoa(peer_addr.sin_addr);
-
       }
       return true;
     }
@@ -59,22 +53,17 @@ class UdpSocket{
       addr.sin_port = htons(port);
       addr.sin_addr.s_addr = inet_addr(ip.c_str());
       socklen_t len = sizeof(struct sockaddr_in);
-      int ret = sendto(_sockfd, data.c_str(), data.size(), 0, 
-          (struct sockaddr*)&addr, len);
+      int ret = sendto(_sockfd, data.c_str(), data.size(), 0,  (struct sockaddr*)&addr, len);
       if (ret < 0) {
         perror("sendto error");
         return false;
-
       }
       return true;
-
     }
-
     bool Close(){
       if (_sockfd > 0) {
         close(_sockfd);
         _sockfd = -1;
-
       }
       return true;
     }

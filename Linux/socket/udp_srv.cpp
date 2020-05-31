@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include "udpsocket.hpp"
-#define CHECK_RET(q) if((q)!=false){return -1;}
+#define CHECK_RET(q) if((q)==false){return -1;}
 
 int main(int argc, char *argv[]) {
   if (argc != 3) {
@@ -10,6 +10,7 @@ int main(int argc, char *argv[]) {
   }
   uint16_t port = std::stoi(argv[2]);
   std::string ip = argv[1];
+
   UdpSocket srv_sock;
   //创建
   CHECK_RET(srv_sock.Socket());
