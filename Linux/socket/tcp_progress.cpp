@@ -8,13 +8,13 @@ void sigcb(int no) {
   //因此在一次的信号处理中 处理到没有子进程退出为止
   while (waitpid(-1, NULL, WNOHANG) > 0);//返回值大于零说明有子进程退出
 }
+
 int main (int argc, char *argv[]) {
   if (argc != 3) {
     std::cout << "usage: ./tcp_srv ip port" << std::endl;
     return -1;
   }
   signal(SIGCHLD, sigcb);
-
   std::string ip = argv[1];
   uint16_t port = std::stoi(argv[2]);
   TcpSocket lst_sock;
