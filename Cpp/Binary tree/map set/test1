@@ -1,0 +1,81 @@
+#include <iostream>
+#include <map>
+#include <set>
+#include <string>
+using namespace std;
+void test_set1() {
+	set<int> s;
+	s.insert(2);
+	s.insert(3);
+	s.insert(2);
+	s.insert(1);
+	s.insert(5);
+	
+	set<int>::iterator it = s.begin();//迭代器打印与auto打印
+	while (it != s.end()) {
+		cout << *it << endl;
+		it++;
+	}
+	for (auto e : s) {
+		cout << e << endl;
+	}
+
+	set<int> copyOne(s); //深拷贝 拷贝构造
+	for (auto e : copyOne) {
+		cout << e << endl;
+	}
+	set<int> eq;// 复制运算符重载
+	eq = s;
+	for (auto e : eq) {
+		cout << e << endl;
+	}
+	//find库函数与set的find区别在于查找效率的快慢
+	set<int>::iterator pos = s.find(3); //找到返回pos 没找到返回end
+	set<int>::iterator pos1 = find(s.begin(), s.end(), 3);
+	if (pos != s.end()) {
+		s.erase(pos);
+	}
+	s.erase(1);//直接删 不存在不删除
+	
+}
+void test_map1() {
+	map<int, int> m;
+	m.insert(pair<int, int>(1, 1));//pair是一个结构体用来便于map的增删查改
+	m.insert(make_pair(2, 2));
+	 
+	map<int, int>::iterator it = m.begin();
+	while (it != m.end()) {
+		cout << it->first << " " << it->second << " ";
+		++it;
+	}
+	cout << endl;
+
+	for (auto& e : m) {
+		cout << e.first << " " << e.second << " ";
+	}
+}
+void exam() {
+	string str = "";
+	map<string, int> m;
+	while (getline(cin, str)) {
+		if (str == " ") {
+			break;
+		}
+		map<string, int>::iterator it = m.find(str);
+		if (it == m.end()) {
+			m.insert(pair<string, int>(str, 1));
+		}
+		else {
+			it->second++;
+		}
+	}
+	for (auto& e : m) {
+		cout << e.first << " " << e.second << endl;
+	}
+}
+int main() {
+	
+	exam();
+	system("pause");
+	return 0;
+}
